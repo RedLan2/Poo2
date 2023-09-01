@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de filmes</title>
+</head>
+<body>
+<h1>Lista de filmes</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>NOME</th>
+            <th>Data de nascimento</th>
+            <th>CPF</th>
+            <th>EMAIL</th>
+        </tr>
+    </thead>
+    <tbody>
+            <tr th:each="cliente : ${lista}">
+            <td th:text="${cliente.nome}"></td>
+            <td th:text="${cliente.dataNascimento}"></td>
+            <td th:text="${cliente.cpf}"></td>
+            <td th:text="${cliente.email}"></td>
+        </tr>
+    </tbody>
+</table>
+</body>
+</html>
