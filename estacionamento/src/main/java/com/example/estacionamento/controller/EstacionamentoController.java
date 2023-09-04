@@ -19,27 +19,34 @@ public class EstacionamentoController {
 	
 	@Autowired
 	private ClienteRepository repository;
+	
 	@GetMapping
+	public String carregaPaginaInicial() {
+		return "estacionamento/Inicial";
+	}
+	
+	@GetMapping("/cliente")
 	public String carregaPaginaFormulario() {
 	        return "estacionamento/cliente";
 	    }
+	
+	@GetMapping("/listagem")
+	public String carregaPaginaListagem(Model model) {
+		model.addAttribute("lista", repository.findAll());
+
+		return "estacionamento/listagem";
+	}
 	
 	@PostMapping
 	public String cadastraCliente(CadastroCliente dados, Model model) {
 	    var cliente = new Cliente(dados);
 	  repository.save(cliente);
 	    System.out.println(cliente);
-	    return "estacionamento/listagem";
+	    return  "redirect:/estacionamento/listagem";
 	}
 
 
-	@GetMapping("/listagem")
-	public String carregaPaginaListagem(Model model) {
-		model.addAttribute( "lista", repository.findAll());
-
-		return "estacionamento/listagem";
-	}
-		  
+  
 
 
 
