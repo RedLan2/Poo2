@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.estacionamento.domain.cliente.Cliente;
 import com.example.estacionamento.domain.cliente.ClienteRepository;
+import com.example.estacionamento.domain.cliente.DonoEstacionamento;
 
 
 @Controller
@@ -25,8 +26,19 @@ public class EstacionamentoController {
 		return "estacionamento/Inicial";
 	}
 	
-	@GetMapping("/")
+	@GetMapping("/dono")
+	public String carregaPaginaEstacionamento() {
+		return "redirect:/estacionamento/dono";
+	}
 	
+	@PostMapping
+	public String cadastraDono(CadastroDonoEstacionamento dados, Model model) {
+	    var DonoEstacionamento = new DonoEstacionamento(dados);
+	  repository.save(DonoEstacionamento);
+	    System.out.println(DonoEstacionamento);
+	    return  "redirect:/estacionamento/listagem";
+	}
+
 	@GetMapping("/cliente")
 	public String carregaPaginaFormulario() {
 	        return "estacionamento/cliente";
