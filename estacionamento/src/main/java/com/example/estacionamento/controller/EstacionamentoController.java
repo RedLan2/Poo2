@@ -25,6 +25,8 @@ public class EstacionamentoController {
 		return "estacionamento/Inicial";
 	}
 	
+	@GetMapping("/")
+	
 	@GetMapping("/cliente")
 	public String carregaPaginaFormulario() {
 	        return "estacionamento/cliente";

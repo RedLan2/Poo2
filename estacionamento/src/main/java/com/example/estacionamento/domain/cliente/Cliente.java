@@ -24,6 +24,7 @@ public class Cliente {
 	public String cpf;
 	@Column(name="email")
 	public  String email;
+	//public String carro;
 
     @Override
     public String toString() {
