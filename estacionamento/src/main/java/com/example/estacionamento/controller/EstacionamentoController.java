@@ -14,6 +14,7 @@ import com.example.estacionamento.domain.cliente.ClienteRepository;
 import com.example.estacionamento.domain.cliente.DonoEstacionamento;
 
 
+
 @Controller
 @RequestMapping("/estacionamento")
 public class EstacionamentoController {
@@ -31,7 +32,7 @@ public class EstacionamentoController {
 		return "redirect:/estacionamento/dono";
 	}
 	
-	@PostMapping
+	@PostMapping("/dono")
 	public String cadastraDono(CadastroDonoEstacionamento dados, Model model) {
 	    var DonoEstacionamento = new DonoEstacionamento(dados);
 	  repository.save(DonoEstacionamento);
