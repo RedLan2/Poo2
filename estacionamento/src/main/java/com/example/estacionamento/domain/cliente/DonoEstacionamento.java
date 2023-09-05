@@ -3,9 +3,19 @@ package com.example.estacionamento.domain.cliente;
 import com.example.estacionamento.controller.CadastroDonoEstacionamento;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
+
+@Entity
+@Table(name="DonoEstacionamento")
 public class DonoEstacionamento {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long id;
 	@Column(name = "nome")
 	public String nome;
@@ -15,19 +25,26 @@ public class DonoEstacionamento {
 	public String cpf;
 	@Column(name="email")
 	public  String email;
+	@Column(name="senha")
 	public String senha;
+	@Column(name="numero")
 	public int numero;
 	
-	
-	public String toString_2() {
+	@Override
+	public String toString() {
 		return "Nome: " + nome +
         		", Data de Nascimento: " + dataNascimento+
                 ", Email: " + email +
-                ", CPF: " + cpf 
+                ", CPF: " + cpf +
+                ",numero"+ numero+
+                "senha"+ senha
                 ;
 	}
 	
-public DonoEstacionamento(CadastroDonoEstacionamento dados_2) {
+	public DonoEstacionamento() {
+		
+	}
+public DonoEstacionamento( CadastroDonoEstacionamento dados_2) {
 	
 	this.cpf=dados_2.cpf();
 	this.dataNascimento=dados_2.dataNascimento();

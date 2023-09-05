@@ -3,10 +3,11 @@ package com.example.estacionamento.domain.cliente;
 public class Estacionamento {
 	
 	public long id;
-	public String  entrada;
-	public String sainda;
-	public String vaga;
-	public String valorPago;
+	public String Nome;
+	public String Endereco;
+	public String HorarioDeEstacionamento;
+	public String Quantasvagas;
+	public String valor;
 	
 	
 

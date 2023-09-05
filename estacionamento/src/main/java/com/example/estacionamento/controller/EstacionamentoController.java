@@ -24,7 +24,6 @@ public class EstacionamentoController {
 	private ClienteRepository repository;
 	@Autowired
 	private DonoRepository reposito;
-	
 	@GetMapping
 	public String carregaPaginaInicial() {
 		return "estacionamento/Inicial";
@@ -32,7 +31,7 @@ public class EstacionamentoController {
 	
 	@GetMapping("/dono")
 	public String carregaPaginaEstacionamento() {
-		return "redirect:/estacionamento/dono";
+		return "estacionamento/dono";
 	}
 	
 	@PostMapping("/dono")
@@ -62,10 +61,4 @@ public class EstacionamentoController {
 	    System.out.println(cliente);
 	    return  "redirect:/estacionamento/listagem";
 	}
-
-
-  
-
-
-
 }
