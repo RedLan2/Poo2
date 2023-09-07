@@ -11,8 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.estacionamento.domain.cliente.Cliente;
 import com.example.estacionamento.domain.cliente.ClienteRepository;
-import com.example.estacionamento.domain.cliente.DonoEstacionamento;
-import com.example.estacionamento.domain.cliente.DonoRepository;
+import com.example.estacionamento.domain.donoestacionamento.DonoEstacionamento;
+import com.example.estacionamento.domain.donoestacionamento.DonoRepository;
+
 
 
 
@@ -24,6 +25,7 @@ public class EstacionamentoController {
 	private ClienteRepository repository;
 	@Autowired
 	private DonoRepository reposito;
+	
 	@GetMapping
 	public String carregaPaginaInicial() {
 		return "estacionamento/Inicial";
@@ -34,13 +36,7 @@ public class EstacionamentoController {
 		return "estacionamento/dono";
 	}
 	
-	@PostMapping("/dono")
-	public String cadastraDono(CadastroDonoEstacionamento dados_2, Model model) {
-	    var donoestacionamento = new DonoEstacionamento(dados_2);
-	    reposito.save(donoestacionamento);
-	    System.out.println(donoestacionamento);
-	    return  "redirect:/estacionamento/listagem";
-	}
+
 
 	@GetMapping("/cliente")
 	public String carregaPaginaFormulario() {
@@ -61,4 +57,17 @@ public class EstacionamentoController {
 	    System.out.println(cliente);
 	    return  "redirect:/estacionamento/listagem";
 	}
-}
+	
+	@PostMapping("/dono")
+	public String cadastraDono(CadastroDonoEstacionamento dados_2,Model model1) {
+	    var donoestacionamento = new DonoEstacionamento(dados_2);
+	    reposito.save(donoestacionamento);
+	    System.out.println(donoestacionamento);
+
+	    return  "estacionamento/dono";
+	}
+	
+	 
+	    
+	}
+
