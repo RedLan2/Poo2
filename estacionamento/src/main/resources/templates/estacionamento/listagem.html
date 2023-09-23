@@ -28,6 +28,14 @@
 	            <td th:text="${cliente.dataNascimento}"></td>
 	            <td th:text="${cliente.cpf}"></td>
 	            <td th:text="${cliente.email}"></td>
+	         <td>
+	           <form action="/estacionamento" method="post">
+                 <input type="hidden" name="_method" value="delete">
+              	 <input type="hidden" name="id" th:value="${cliente.id}">
+              	 <input type="submit" value="Excluir">
+               </form>
+		    </td>
+    
 	        </tr>
 	    </tbody>
 	</table>

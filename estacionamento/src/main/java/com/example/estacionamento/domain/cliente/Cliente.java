@@ -24,6 +24,8 @@ public class Cliente {
 	public String cpf;
 	@Column(name="email")
 	public  String email;
+	@Column(name="senha")
+	public String senha;
 	//public String carro;
 
     @Override
@@ -43,7 +45,7 @@ public class Cliente {
 	        this.dataNascimento=dados.dataNascimento();
 	        this.email=dados.email();
 	        this.nome=dados.nome();
-	        
+	        this.senha=dados.senha();	        
 	    }
 
 }
