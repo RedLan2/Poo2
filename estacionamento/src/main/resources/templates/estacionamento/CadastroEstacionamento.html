@@ -1,0 +1,47 @@
+<!DOCTYPE html> 
+ <html> 
+ <head> 
+ <meta charset="ISO-8859-1"> 
+ <title>Insert title here</title> 
+ </head> 
+ <body> 
+ <h1>Bem vindo ao estacionamento</h1> 
+ <h2>Cadastre seu estacionamento</h2> 
+     <br> 
+     <form  method="post" action="/estacionamento/CadastroEstacionamento" > 
+         <label for="nome">Nome:</label> 
+         <input type="text" id="nome" name="nome" required> 
+         <br> 
+  
+         <label for="endereco">Endereço do estacionamento: </label> 
+         <input type="text" id="endereco" name="endereco" required> 
+         <br> 
+  
+         <label for="vagas">Vagas disponiveis:</label> 
+         <input type="vagas" id="vagas" name="vagas" required> 
+         <br> 
+  
+         <label for="valor_vagar">Valor da vaga:</label> 
+         <input type="text" id="valor_vaga" name="valor_vaga" required> 
+         <br> 
+  
+      
+    <label for="cnpj">CNPJ do estabelecimento:</label> 
+         <input type="text" id="cnpj" name="cnpj" required> 
+         <br> 
+         
+         <label for="horario_funcionamento">Horario de funcionamento:</label> 
+         <input type="text" id="horario_funcionamento" name="horario_funcionamento"> 
+         <br> 
+  
+         <input type="submit"  class="button" value="Cadastrar" onclick="exibirPopup()"> 
+     </form> 
+  
+     <script> 
+         function exibirPopup() { 
+             alert("Cadastro do estacionamento realizado com sucesso!"); 
+             // Aqui você pode adicionar outras ações, como enviar o formulário para o servidor 
+         } 
+     </script> 
+ </body> 
+ </html>

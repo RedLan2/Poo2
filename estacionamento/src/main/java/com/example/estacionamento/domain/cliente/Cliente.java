@@ -1,6 +1,7 @@
 package com.example.estacionamento.domain.cliente;
 
 import com.example.estacionamento.controller.CadastroCliente;
+import com.example.estacionamento.controller.alteraCliente;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,20 +16,68 @@ public class Cliente {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public Long id;
+	private Long id;
 	@Column(name = "nome")
-	public String nome;
+	private String nome;
 	@Column(name="datadenascimento")
-	public String dataNascimento;
+	private String dataNascimento;
 	@Column(name="cpf")
-	public String cpf;
+	private String cpf;
 	@Column(name="email")
-	public  String email;
+	private  String email;
 	@Column(name="senha")
-	public String senha;
+	private String senha;
 	//public String carro;
 
-    @Override
+    public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getDataNascimento() {
+		return dataNascimento;
+	}
+
+	public void setDataNascimento(String dataNascimento) {
+		this.dataNascimento = dataNascimento;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
+	@Override
     public String toString() {
         return "Nome: " + nome +
         		", Data de Nascimento: " + dataNascimento+
@@ -48,4 +97,13 @@ public class Cliente {
 	        this.senha=dados.senha();	        
 	    }
 
+
+		public void atualizaDados(alteraCliente dados) {
+			// TODO Auto-generated method stub
+			this.nome=dados.nome();
+			this.cpf=dados.cpf();
+			this.email=dados.email();
+			
+			
+		}
 }

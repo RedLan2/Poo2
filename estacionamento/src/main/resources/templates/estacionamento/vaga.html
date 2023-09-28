@@ -12,7 +12,47 @@
     <option value="Estacionameto2">Estacionameto bacurin</option>
     <option value="Estacionameto3">Opção 3</option>
 </select>
-	<h2>Escolha sua vaga</h2>
+	<h2>Detalhes do Estacionamento</h2>
+<p>Nome: <span id="nomeEstacionamento"></span></p>
+<p>Endereço: <span id="enderecoEstacionamento"></span></p>
+<p>Vagas Disponíveis: <span id="vagasEstacionamento"></span></p>
+<p>Valor da Vaga: <span id="valorVagaEstacionamento"></span></p>
+
+<script>
+    var selectEstacionamento = document.getElementById("escolha");
+    var nomeEstacionamento = document.getElementById("nomeEstacionamento");
+    var enderecoEstacionamento = document.getElementById("enderecoEstacionamento");
+    var vagasEstacionamento = document.getElementById("vagasEstacionamento");
+    var valorVagaEstacionamento = document.getElementById("valorVagaEstacionamento");
+
+    selectEstacionamento.addEventListener("change", function () {
+        var selectedOption = selectEstacionamento.options[selectEstacionamento.selectedIndex].value;
+
+        // Aqui você pode usar uma estrutura condicional para definir os detalhes com base na opção selecionada.
+        if (selectedOption === "Estacionameto1") {
+            nomeEstacionamento.textContent = "Estacionamento Ze";
+            enderecoEstacionamento.textContent = "Endereço do Estacionamento Ze";
+            vagasEstacionamento.textContent = "10 vagas disponíveis";
+            valorVagaEstacionamento.textContent = "R$ 10,00 por hora";
+        } else if (selectedOption === "Estacionameto2") {
+            nomeEstacionamento.textContent = "Estacionamento Bacurin";
+            enderecoEstacionamento.textContent = "Endereço do Estacionamento Bacurin";
+            vagasEstacionamento.textContent = "20 vagas disponíveis";
+            valorVagaEstacionamento.textContent = "R$ 8,00 por hora";
+        } else if (selectedOption === "Estacionameto3") {
+            nomeEstacionamento.textContent = "Opção 3";
+            enderecoEstacionamento.textContent = "Endereço da Opção 3";
+            vagasEstacionamento.textContent = "15 vagas disponíveis";
+            valorVagaEstacionamento.textContent = "R$ 12,00 por hora";
+        } else {
+            // Caso nenhuma opção seja selecionada ou seja desconhecida.
+            nomeEstacionamento.textContent = "";
+            enderecoEstacionamento.textContent = "";
+            vagasEstacionamento.textContent = "";
+            valorVagaEstacionamento.textContent = "";
+        }
+    });
+</script>
 
 </body>
 </html>

@@ -13,21 +13,76 @@ import jakarta.persistence.Table;
 @Table(name="donoestacionamento")
 public class DonoEstacionamento {
 	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getDatadenascimento() {
+		return datadenascimento;
+	}
+
+	public void setDatadenascimento(String datadenascimento) {
+		this.datadenascimento = datadenascimento;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
+	public String getNumero() {
+		return numero;
+	}
+
+	public void setNumero(String numero) {
+		this.numero = numero;
+	}
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public Long id;
+	private Long id;
 
-	public String nome;
+	private String nome;
 	
-	public String datadenascimento;
+	private String datadenascimento;
 	
-	public String cpf;
+	private String cpf;
 
-	public  String email;
+	private  String email;
 
-	public String senha;
+	private String senha;
 
-	public String numero;
+	private String numero;
 	
 	@Override
 	public String toString() {

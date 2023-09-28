@@ -29,6 +29,7 @@
 	            <td th:text="${cliente.cpf}"></td>
 	            <td th:text="${cliente.email}"></td>
 	         <td>
+				  <a th:href="@{/estacionamento/cliente?id={id}(id=${cliente.id})}">Editar</a>
 	           <form action="/estacionamento" method="post">
                  <input type="hidden" name="_method" value="delete">
               	 <input type="hidden" name="id" th:value="${cliente.id}">

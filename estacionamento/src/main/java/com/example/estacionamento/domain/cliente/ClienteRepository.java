@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface ClienteRepository extends JpaRepository<Cliente, Long>{
 
 
-	Cliente findByCpfAndEmail(String cpf, String email);
+	Cliente findBySenhaAndEmail(String senha, String email);
 
 
 

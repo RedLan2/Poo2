@@ -12,6 +12,10 @@
         <div class="registration form">
             <header>CRIAR CONTA</header>
             <form method="post" action="/estacionamento">
+				
+				
+    <input type="hidden" name="_method" value="get">
+    <input type="hidden" name="id" th:value="${cliente?.id}">
             <label for="nome">Nome:</label>
             <input id="nome" name="nome">
             
