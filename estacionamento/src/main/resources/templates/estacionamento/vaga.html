@@ -13,32 +13,30 @@
 
 <h1>Lista de cliente</h1>
 
-	<table>
-	    <thead>
-			 <!--    <tr>
-	            <th>NOME</th>
-	            <th>Endereço</th>
-	            <th>vagas</th>
-	            <th>Valor da vaga</th>
-	        </tr>-->
-	       
-		
-	
-	    </thead>
-	    <tbody>
-			<select th:each="estacionamento : ${esta}">
-				   <option th:text="${estacionamento.nome}"></option>
-				</select>
-	
-	     
-	            <td th:text="${estacionamento.endereco}"></td>
-	            <td th:text="${estacionamento.vagas}"></td>
-	            <td th:text="${estacionamento.valor_vaga}"></td>
-	       
-    
-	        </tr>
-	    </tbody>
-	</table>
+<table>
+	<select>
+    <option th:each="estacionamento : ${esta}" th:value="${estacionamento.nome}" th:text="${estacionamento.nome}"></option>
+</select>
+    <thead>
+        <tr>
+            <th>NOME</th>
+            <th>Endereço</th>
+            <th>vagas</th>
+            <th>Valor da vaga</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="estacionamento : ${esta}">
+            <td th:text="${estacionamento.nome}"></td>
+            <td th:text="${estacionamento.endereco}"></td>
+            <td th:text="${estacionamento.vagas}"></td>
+            <td th:text="${estacionamento.valor_vaga}"></td>
+        </tr>
+    </tbody>
+</table>
+
+
+
 	</div>
 </body>
 </html>
