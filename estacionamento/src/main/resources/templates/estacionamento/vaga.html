@@ -1,58 +1,44 @@
 <!DOCTYPE html>
-<html>
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://thymeleaf.org"
+ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+   layout:decorate="~{template.html}"
+ >
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+    <meta charset="UTF-8">
+    <title>Lista de filmes</title>
 </head>
 <body>
-	<h1>Escolho o estacionamento</h1>
-	<label for="escolha">Escolha uma opção:</label>
-     <select id="escolha" name="escolha">
-    <option value="Estacionameto1">Estacionamento Ze</option>
-    <option value="Estacionameto2">Estacionameto bacurin</option>
-    <option value="Estacionameto3">Opção 3</option>
-</select>
-	<h2>Detalhes do Estacionamento</h2>
-<p>Nome: <span id="nomeEstacionamento"></span></p>
-<p>Endereço: <span id="enderecoEstacionamento"></span></p>
-<p>Vagas Disponíveis: <span id="vagasEstacionamento"></span></p>
-<p>Valor da Vaga: <span id="valorVagaEstacionamento"></span></p>
+	<div layout:fragment="conteudo">
 
-<script>
-    var selectEstacionamento = document.getElementById("escolha");
-    var nomeEstacionamento = document.getElementById("nomeEstacionamento");
-    var enderecoEstacionamento = document.getElementById("enderecoEstacionamento");
-    var vagasEstacionamento = document.getElementById("vagasEstacionamento");
-    var valorVagaEstacionamento = document.getElementById("valorVagaEstacionamento");
+<h1>Lista de cliente</h1>
 
-    selectEstacionamento.addEventListener("change", function () {
-        var selectedOption = selectEstacionamento.options[selectEstacionamento.selectedIndex].value;
-
-        // Aqui você pode usar uma estrutura condicional para definir os detalhes com base na opção selecionada.
-        if (selectedOption === "Estacionameto1") {
-            nomeEstacionamento.textContent = "Estacionamento Ze";
-            enderecoEstacionamento.textContent = "Endereço do Estacionamento Ze";
-            vagasEstacionamento.textContent = "10 vagas disponíveis";
-            valorVagaEstacionamento.textContent = "R$ 10,00 por hora";
-        } else if (selectedOption === "Estacionameto2") {
-            nomeEstacionamento.textContent = "Estacionamento Bacurin";
-            enderecoEstacionamento.textContent = "Endereço do Estacionamento Bacurin";
-            vagasEstacionamento.textContent = "20 vagas disponíveis";
-            valorVagaEstacionamento.textContent = "R$ 8,00 por hora";
-        } else if (selectedOption === "Estacionameto3") {
-            nomeEstacionamento.textContent = "Opção 3";
-            enderecoEstacionamento.textContent = "Endereço da Opção 3";
-            vagasEstacionamento.textContent = "15 vagas disponíveis";
-            valorVagaEstacionamento.textContent = "R$ 12,00 por hora";
-        } else {
-            // Caso nenhuma opção seja selecionada ou seja desconhecida.
-            nomeEstacionamento.textContent = "";
-            enderecoEstacionamento.textContent = "";
-            vagasEstacionamento.textContent = "";
-            valorVagaEstacionamento.textContent = "";
-        }
-    });
-</script>
-
+	<table>
+	    <thead>
+			 <!--    <tr>
+	            <th>NOME</th>
+	            <th>Endereço</th>
+	            <th>vagas</th>
+	            <th>Valor da vaga</th>
+	        </tr>-->
+	       
+		
+	
+	    </thead>
+	    <tbody>
+			<select th:each="estacionamento : ${esta}">
+				   <option th:text="${estacionamento.nome}"></option>
+				</select>
+	
+	     
+	            <td th:text="${estacionamento.endereco}"></td>
+	            <td th:text="${estacionamento.vagas}"></td>
+	            <td th:text="${estacionamento.valor_vaga}"></td>
+	       
+    
+	        </tr>
+	    </tbody>
+	</table>
+	</div>
 </body>
 </html>

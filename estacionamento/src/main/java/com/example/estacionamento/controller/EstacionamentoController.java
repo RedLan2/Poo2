@@ -2,6 +2,10 @@ package com.example.estacionamento.controller;
 
 
 
+
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,9 +43,13 @@ public class EstacionamentoController {
 
 	
 	@GetMapping("/vaga")
-    public String exibirFormularioLogin() {
+    public String exibirFormularioLogin(Model model) {
+	
+		model.addAttribute("esta", ESTrepository.findAll());
+        
         return "estacionamento/vaga"; // Retorna a página de login
     }
+	
     @PostMapping("/vaga")
     public String fazerLogin(@RequestParam String senha, @RequestParam String email, Model model) {
         // Verifique se o usuário existe no banco de dados
@@ -84,15 +92,8 @@ public class EstacionamentoController {
 		return "estacionamento/listagem";
 	}
 	
-	@GetMapping("/login_usuario")
-	 public String loginPage() {
-       return "estacionamento/login_usuario"; 
-   }
 	
-	    @GetMapping("/login-erro")
-	    public String loginErro() {
-	        return "redirect:/login_usuario?error=true"; // Redirecione para a página de login com mensagem de erro
-	    }
+	
 	
 	@PostMapping
 	public String cadastraCliente(CadastroCliente dados, Model model) {
