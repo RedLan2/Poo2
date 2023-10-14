@@ -8,7 +8,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.transaction.Transactional;
 
 @Entity
 @Table(name = "cliente")
@@ -27,6 +30,10 @@ public class Cliente {
 	private  String email;
 	@Column(name="senha")
 	private String senha;
+	
+	/*@OneToMany
+	@JoinColumn(name="veiculo_id", referencedColumnName="veiculo_id")
+	private Veiculo veiculo;*/
 	//public String carro;
 
     public Long getId() {
@@ -76,6 +83,14 @@ public class Cliente {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
+	
+	/*public Veiculo getVeiculo() {
+		return veiculo;
+	}
+
+	public void setVeiculo(Veiculo veiculo) {
+		this.veiculo = veiculo;
+	}*/
 
 	@Override
     public String toString() {

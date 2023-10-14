@@ -4,10 +4,9 @@ package com.example.estacionamento.controller;
 
 
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.estacionamento.domain.cliente.Cliente;
 import com.example.estacionamento.domain.cliente.ClienteRepository;
+import com.example.estacionamento.domain.cliente.Veiculo;
+import com.example.estacionamento.domain.cliente.VeiculoRepository;
 import com.example.estacionamento.domain.donoestacionamento.DonoEstacionamento;
 import com.example.estacionamento.domain.donoestacionamento.DonoRepository;
 import com.example.estacionamento.domain.estacionamento.Estacionamento;
@@ -37,6 +38,8 @@ public class EstacionamentoController {
 	private DonoRepository reposito;
 	@Autowired
 	private EstacionamentoRepository ESTrepository;
+	@Autowired
+	private VeiculoRepository  veiculoRepository;
 	
 	@Autowired
     private ClienteRepository clienteRepository; // Supondo que você tenha um repositório de usuários
@@ -91,7 +94,12 @@ public class EstacionamentoController {
 
 		return "estacionamento/listagem";
 	}
-	
+	 @GetMapping("/veiculo")
+	 public String carregaPaginaVeiculo(Model model) {
+		
+		 
+		 return "estacionamento/veiculo";
+	 }
 	
 	
 	
@@ -133,4 +141,13 @@ public class EstacionamentoController {
 	    ESTrepository.save(estacionamento);	
 	    return "redirect:/estacionamento";
 	}
+	
+	// @Transactional(readOnly = false, propagation = Propagation.NEVER)
+	@PostMapping("/veiculo")
+		public String cadastraVeiculo(CadastraVeiculo veiculo){
+			var veiculo1 = new Veiculo(veiculo);
+		    veiculoRepository.save(veiculo1);	
+		    return "estacionamento/veiculo";
+	}
+	
 }
