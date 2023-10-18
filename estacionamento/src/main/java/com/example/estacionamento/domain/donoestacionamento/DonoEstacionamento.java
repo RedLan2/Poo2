@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -84,6 +85,8 @@ public class DonoEstacionamento {
 
 	private String numero;
 	
+	@OneToMany(mappedBy="DonoEstacionamento", orphanRemoval=true)
+	
 	@Override
 	public String toString() {
 		return "Nome: " + nome +
@@ -107,4 +110,7 @@ public DonoEstacionamento( CadastroDonoEstacionamento dados_2) {
     this.numero=dados_2.numero();
     this.senha=dados_2.senha();   
   }
+
+
+
 }

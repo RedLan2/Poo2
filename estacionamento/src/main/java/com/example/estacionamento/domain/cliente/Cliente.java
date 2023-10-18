@@ -1,5 +1,7 @@
 package com.example.estacionamento.domain.cliente;
 
+import java.util.List;
+
 import com.example.estacionamento.controller.CadastroCliente;
 import com.example.estacionamento.controller.alteraCliente;
 
@@ -11,7 +13,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.transaction.Transactional;
 
 @Entity
 @Table(name = "cliente")
@@ -31,11 +32,13 @@ public class Cliente {
 	@Column(name="senha")
 	private String senha;
 	
-	/*@OneToMany
+	/*@OneToMany(mappedBy = "cliente", orphanRemoval = true)
 	@JoinColumn(name="veiculo_id", referencedColumnName="veiculo_id")
-	private Veiculo veiculo;*/
+	private List<Veiculo> veiculo;*/
 	//public String carro;
-
+	 @OneToMany(mappedBy = "cliente", orphanRemoval = true)
+	    private List<Veiculo> veiculos; 
+	 
     public Long getId() {
 		return id;
 	}
@@ -111,6 +114,10 @@ public class Cliente {
 	        this.nome=dados.nome();
 	        this.senha=dados.senha();	        
 	    }
+	
+	 public Cliente(Long id) {
+		 this.id = id;
+	 }
 
 
 		public void atualizaDados(alteraCliente dados) {
