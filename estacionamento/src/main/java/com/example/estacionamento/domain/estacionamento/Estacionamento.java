@@ -1,6 +1,7 @@
 package com.example.estacionamento.domain.estacionamento;
 
 import com.example.estacionamento.controller.CadastroEstacionamento;
+import com.example.estacionamento.domain.donoestacionamento.DonoEstacionamento;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,7 +27,16 @@ public class Estacionamento {
 	
 	@ManyToOne
 	@JoinColumn(name="dono_estacionamento_id", referencedColumnName="id")
+	private DonoEstacionamento dono;
 	
+	
+	
+	public DonoEstacionamento getDono() {
+		return dono;
+	}
+	public void setDono(DonoEstacionamento dono) {
+		this.dono = dono;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -78,7 +88,8 @@ public class Estacionamento {
 				", valor da vaga " + valor_vaga				
 				;
 	}
-	public Estacionamento() {
+	
+	public  Estacionamento() {
 		
 	}
 	
@@ -88,8 +99,8 @@ public class Estacionamento {
 		this.horario_funcionamento=dados_3.horario_funcionamento();
 		this.vagas=dados_3.vagas();
 		this.valor_vaga=dados_3.valor_vaga();
-		this.cnpj=dados_3.cnpj()
-;		
+		this.cnpj=dados_3.cnpj();
+	
 	
 	}
 

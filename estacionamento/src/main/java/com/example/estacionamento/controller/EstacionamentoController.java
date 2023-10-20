@@ -4,6 +4,9 @@ package com.example.estacionamento.controller;
 
 
 
+import java.net.http.HttpRequest;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Propagation;
@@ -11,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,6 +47,9 @@ public class EstacionamentoController {
 	
 	@Autowired
     private ClienteRepository clienteRepository; // Supondo que você tenha um repositório de usuários
+	
+	private Cliente cliente = new Cliente();
+	private DonoEstacionamento dono = new DonoEstacionamento();
 
 	
 	@GetMapping("/vaga")
@@ -53,21 +60,29 @@ public class EstacionamentoController {
         return "estacionamento/vaga"; // Retorna a página de login
     }
 	
-    @PostMapping("/vaga")
+    @PostMapping("/Perfil")
     public String fazerLogin(@RequestParam String senha, @RequestParam String email, Model model) {
         // Verifique se o usuário existe no banco de dados
         Cliente usuario = clienteRepository.findBySenhaAndEmail(senha, email);
-
+        DonoEstacionamento donoEsta = reposito.findBySenhaAndEmail(senha, email);
         if (usuario != null) {
-            // Usuário válido, redirecione para a página inicial ou outra página autorizada
-        	System.out.println("DEU CERTO");
-            return "redirect:/estacionamento/vaga";
-        } else {
+        	System.out.println("usuario: " + usuario);
+        	this.cliente.setId(usuario.getId());
+            return "redirect:/estacionamento/Perfil/logado";
+            
+        } else if(donoEsta != null) {
+        	System.out.println("Usuário (dono de estacionamento) logado: " + donoEsta);
+
+	        model.addAttribute("donoEstacionamento", donoEsta); 
+	        this.dono.setId(dono.getId());
+	        return "redirect:/estacionamento/CadastroEstacionamento";
             // Usuário inválido, mostre uma mensagem de erro
-            model.addAttribute("erro", "CPF ou email inválidos");
+        }else {
+        	System.out.println("erro CPF ou email inválidos");
             return "redirect:/estacionamento";
         }
     }
+    
 	@GetMapping
 	public String carregaPaginaInicial() {
 		return "estacionamento/Inicial";
@@ -100,9 +115,28 @@ public class EstacionamentoController {
 		 
 		 return "estacionamento/veiculo";
 	 }
+	 @GetMapping("/Perfil")
+	public String carregaPerfil(Model model) {
+		System.out.println("Cliente: " + cliente);
+		return "estacionamento/Perfil";
+	}
 	
+	@GetMapping("/Perfil/logado")
+	public String carregaPerfilLogado(Model model) {
+		Optional<Cliente> clienteSelecionado = clienteRepository.findById(this.cliente.getId());
+		System.out.println("ClienteSelecionado: " + clienteSelecionado);
+		model.addAttribute("nomeCliente", clienteSelecionado.get().getNome());
+		model.addAttribute("emailCliente", clienteSelecionado.get().getEmail());
+		return "estacionamento/Perfil";
+	}
 	
-	
+	@GetMapping("/registroAtendimento/{id}")
+	public String carregaRegistro(@PathVariable Long id, Model model) {
+		Optional<Estacionamento> estacionamentoSelecionado = ESTrepository.findById(id);
+		model.addAttribute("estacionamentoId", estacionamentoSelecionado.get().getId());
+		model.addAttribute("estacionamentoNome", estacionamentoSelecionado.get().getNome());
+		return "estacionamento/registroAtendimento";
+	}
 	@PostMapping
 	public String cadastraCliente(CadastroCliente dados, Model model) {
 	    var cliente = new Cliente(dados);
@@ -142,12 +176,12 @@ public class EstacionamentoController {
 	    return "redirect:/estacionamento";
 	}
 	
-	// @Transactional(readOnly = false, propagation = Propagation.NEVER)
 	@PostMapping("/veiculo")
-		public String cadastraVeiculo(CadastraVeiculo veiculo){
-			var veiculo1 = new Veiculo(veiculo);
-		    veiculoRepository.save(veiculo1);	
-		    return "estacionamento/veiculo";
+	public String cadastraVeiculo(CadastraVeiculo veiculo, Model model){
+		model.addAttribute("listaVeiculos", veiculoRepository.findAll());
+		var veiculo1 = new Veiculo(veiculo, cliente.getId());
+		//veiculo1.setCliente(this.cliente);
+	    veiculoRepository.save(veiculo1);	
+	    return "estacionamento/veiculo";
 	}
-	
 }

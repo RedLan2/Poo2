@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: linear-gradient(0deg, rgb(10, 10, 10), #0d0d0d);
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+main.container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    width: 30rem;
+    padding: 1.5rem;
+    background: rgb(255, 255, 255);
+
+}
+
+main h1{
+    font-weight: 600;
+    margin-bottom: 2rem;
+    position: relative;
+    color: rgb(1, 1, 41);
+}
+
+.input-field {
+    justify-content: center;
+}
+
+.input-field label {
+    text-align: start;
+}
+
+.input-field input {
+    border-bottom: 1.5px solid rgb(87, 87, 87);
+    margin-bottom: 5px;
+    outline: none;
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: rgb(0, 0, 0);
+}
+
+.input-field input:focus {
+    border-bottom: 2px solid blue;
+}
+.input-field input::placeholder {
+    color: rgba(0, 0,0, 0.5);
+}
+
+form input[type="submit"] {
+    margin-top: 2rem;
+    padding: 0.4rem;
+    font-size: 14px;
+    font-weight: 400;
+    color: #fff;
+    background: linear-gradient(to left, #020067, #07001a);
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+form input[type="submit"]:hover {
+    background: linear-gradient(to right, #020067, #07001a);
+}

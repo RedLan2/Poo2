@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -20,9 +22,12 @@ public class Veiculo {
     private String modelo;
     private String cor;
     private String placa;
- 
     
-  
+    @ManyToOne
+	@JoinColumn(name="cliente_id", referencedColumnName="id")
+	private Cliente cliente;
+    
+    
    
     
     public Long getId() {
@@ -50,11 +55,27 @@ public class Veiculo {
 		this.placa = placa;
 	}
 	
+	public Cliente getCliente() {
+		return cliente;
+	}
+	
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+	
+	public Veiculo() {}
+	
 	public Veiculo(CadastraVeiculo dados_Veiculo) {
 		this.modelo=dados_Veiculo.modelo();
 		this.cor=dados_Veiculo.cor();
 		this.placa=dados_Veiculo.placa();
 
 	}
-
+	
+	public Veiculo(CadastraVeiculo dados_Veiculo, Long clienteId) {
+		this.modelo=dados_Veiculo.modelo();
+		this.cor=dados_Veiculo.cor();
+		this.placa=dados_Veiculo.placa();
+		this.setCliente(new Cliente(clienteId));
+	}
 }

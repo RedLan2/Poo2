@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Perfil</title>
+</head>
+<body>
+  <table>
+      <h1 th:if="${nomeCliente != null}" th:text="${nomeCliente}">Bem vindo ao E-Estacionamento</h1>
+  </table>
+
+  <form action="/estacionamento/vaga" method="get">
+    <p>Caso já tenha um veículo cadastrado, escolha um estacionamento.</p>
+    <input type="submit" value="Escolher estacionamento">
+  </form>
+  
+  <form action="/estacionamento/veiculo" method="get">
+    <p>Caso não tenha um veículo cadastrado, cadastre um veículo.</p>
+    <input type="submit" value="Cadastrar Veículo">
+  </form>
+</body>
+</html>

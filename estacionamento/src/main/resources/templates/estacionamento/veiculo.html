@@ -1,25 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<meta charset="UTF-8">
+<title>Registro Veiculo</title>
+<link rel="stylesheet" href="registro_veiculo.css"  th:href="@{/css/registro_veiculo.css}" >
 </head>
 <body>
-<h1>Registro de Veículo</h1>
-    <form action="/estacionamento/veiculo" method="POST">
-        <label for="cor">Cor do Veículo:</label>
-        <input type="text" id="cor" name="cor" required>
-        <br><br>
+    <main class="container">
+        <h1>Registro de Veiculo</h1>
         
-        <label for="placa">Placa do Veículo:</label>
-        <input type="text" id="placa" name="placa" required>
-        <br><br>
-        
-        <label for="modelo">Modelo do Veículo:</label>
-        <input type="text" id="modelo" name="modelo" required>
-        <br><br>
-        
-        <input type="submit" value="Enviar">
-    </form>
+    <div class="input-field">
+        <form action="/estacionamento/veiculo" method="POST">
+            <label for="cor">Cor do Veiculo:</label>
+            <input type="text" id="cor" name="cor" required>
+            <br><br>
+            
+            <label for="placa">Placa do Veiculo:</label>
+            <input type="text" id="placa" name="placa" required>
+            <br><br>
+            
+            <label for="modelo">Modelo do Veiculo:</label>
+            <input type="text" id="modelo" name="modelo" required>
+            <br><br>
+            
+            <input type="submit" value="Enviar">
+        </form>
+</div>
+</main>
 </body>
 </html>

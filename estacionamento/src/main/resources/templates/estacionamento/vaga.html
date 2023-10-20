@@ -16,6 +16,7 @@
 <table>
 	<select>
     <option th:each="estacionamento : ${esta}" th:value="${estacionamento.nome}" th:text="${estacionamento.nome}"></option>
+   
 </select>
     <thead>
         <tr>
@@ -23,6 +24,7 @@
             <th>Endereço</th>
             <th>vagas</th>
             <th>Valor da vaga</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -31,7 +33,9 @@
             <td th:text="${estacionamento.endereco}"></td>
             <td th:text="${estacionamento.vagas}"></td>
             <td th:text="${estacionamento.valor_vaga}"></td>
-            
+            <td>
+	            <a th:href="@{/estacionamento/registroAtendimento/{id}(id=${estacionamento.id})}">Escolher estacionamento</a>
+	        </td>
         </tr>
     </tbody>
 </table>

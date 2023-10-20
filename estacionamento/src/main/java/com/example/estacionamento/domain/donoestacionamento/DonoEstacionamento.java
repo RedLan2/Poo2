@@ -101,6 +101,10 @@ public class DonoEstacionamento {
 	public DonoEstacionamento() {
 		
 	}
+	
+	public DonoEstacionamento(Long id) {
+		this.id=id;
+	}
 public DonoEstacionamento( CadastroDonoEstacionamento dados_2) {
 	
 	this.cpf=dados_2.cpf();

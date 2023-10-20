@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://thymeleaf.org"
+ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+   layout:decorate="~{template.html}"
+ >
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Registro de atendimento</title>
+	<link rel="stylesheet" href="registro_veiculo.css" th:href="@{/css/registro_veiculo.css}">
+	<script>
+	    function exibirPopup() {
+	        alert("Cadastro do cliente realizado com sucesso!");
+	    }
+	</script>
+</head>
+<body>
+	<h1></h1>
+    <main class="container">
+		<div class="input-field">
+	<form action="/estacionamento/vaga" method="POST">
+	 <th:block th:if="${estacionamentoId != null}">
+		 <h1>REGISTRO DE ATENDIMENTO</h1>
+	        <!--<p>ID: <span th:text="${estacionamentoId}"></span></p>-->
+	        <label for="nomeEstacionamento">Estacionamento:</label><br>
+	        <p><span th:text="${estacionamentoNome}"></span></p>
+			<label for="horario_funcionamento">Veiculo:</label><br>
+		
+				<select>
+			    	<option th:each="veiculo : ${listaVeiculos}" th:value="${veiculo.nome}" th:text="${veiculo.nome}"></option>
+				</select>
+			
+			 <br><input type="submit" class="button" value="Registrar" onclick="exibirPopup()">
+	    </th:block>
+
+	    <!-- <th:block th:if="${estacionamentoSelecionado == null}">
+	        <p>Estacionamento não encontrado.</p>
+	    </th:block> -->
+	</form>
+</div>
+</main>
+</body>
+</html>
