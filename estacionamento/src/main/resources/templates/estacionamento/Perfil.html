@@ -5,10 +5,12 @@
 <title>Perfil</title>
 </head>
 <body>
-  <table>
-      <h1 th:if="${nomeCliente != null}" th:text="${nomeCliente}">Bem vindo ao E-Estacionamento</h1>
-  </table>
 
+   <h1 th:if="${nomeCliente != null}" th:text="'Bem-Vindo, ' + ${nomeCliente}"></h1>
+
+  
+  
+     
   <form action="/estacionamento/vaga" method="get">
     <p>Caso já tenha um veículo cadastrado, escolha um estacionamento.</p>
     <input type="submit" value="Escolher estacionamento">

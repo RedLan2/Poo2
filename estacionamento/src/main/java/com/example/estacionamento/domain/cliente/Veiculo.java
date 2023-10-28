@@ -1,5 +1,7 @@
 package com.example.estacionamento.domain.cliente;
 
+import java.util.Objects;
+
 import com.example.estacionamento.controller.CadastraVeiculo;
 
 import jakarta.persistence.Column;
@@ -22,13 +24,15 @@ public class Veiculo {
     private String modelo;
     private String cor;
     private String placa;
-    
-    @ManyToOne
+   
+
+	@ManyToOne
 	@JoinColumn(name="cliente_id", referencedColumnName="id")
 	private Cliente cliente;
     
     
    
+    
     
     public Long getId() {
 		return id;
@@ -65,6 +69,10 @@ public class Veiculo {
 	
 	public Veiculo() {}
 	
+	public Veiculo(Long id) {
+		this.id = id;
+	}
+	
 	public Veiculo(CadastraVeiculo dados_Veiculo) {
 		this.modelo=dados_Veiculo.modelo();
 		this.cor=dados_Veiculo.cor();
@@ -77,5 +85,21 @@ public class Veiculo {
 		this.cor=dados_Veiculo.cor();
 		this.placa=dados_Veiculo.placa();
 		this.setCliente(new Cliente(clienteId));
+	}
+	@Override
+	public int hashCode() {
+		return Objects.hash(cliente, cor, id, modelo, placa);
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Veiculo other = (Veiculo) obj;
+		return Objects.equals(cliente, other.cliente) && Objects.equals(cor, other.cor) && Objects.equals(id, other.id)
+				&& Objects.equals(modelo, other.modelo) && Objects.equals(placa, other.placa);
 	}
 }

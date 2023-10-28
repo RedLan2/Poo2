@@ -2,9 +2,8 @@ package com.example.estacionamento.controller;
 
 
 
-
-
 import java.net.http.HttpRequest;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +27,7 @@ import com.example.estacionamento.domain.donoestacionamento.DonoEstacionamento;
 import com.example.estacionamento.domain.donoestacionamento.DonoRepository;
 import com.example.estacionamento.domain.estacionamento.Estacionamento;
 import com.example.estacionamento.domain.estacionamento.EstacionamentoRepository;
+import com.example.estacionamento.service.ClienteService;
 
 
 
@@ -48,8 +48,12 @@ public class EstacionamentoController {
 	@Autowired
     private ClienteRepository clienteRepository; // Supondo que você tenha um repositório de usuários
 	
+	@Autowired
+	private ClienteService clienteService;
+	
 	private Cliente cliente = new Cliente();
 	private DonoEstacionamento dono = new DonoEstacionamento();
+	private Estacionamento estacionamento= new Estacionamento();
 
 	
 	@GetMapping("/vaga")
@@ -94,7 +98,8 @@ public class EstacionamentoController {
 	}
 	
 	@GetMapping("/CadastroEstacionamento")
-	public String carregaPaginaEstacionamento_Cadastro(){
+	public String carregaPaginaEstacionamento_Cadastro(Model model){
+
 		return "estacionamento/CadastroEstacionamento";
 	}
 	
@@ -111,7 +116,7 @@ public class EstacionamentoController {
 	}
 	 @GetMapping("/veiculo")
 	 public String carregaPaginaVeiculo(Model model) {
-		
+			model.addAttribute("listaveiculo", veiculoRepository.findAll());
 		 
 		 return "estacionamento/veiculo";
 	 }
@@ -130,13 +135,20 @@ public class EstacionamentoController {
 		return "estacionamento/Perfil";
 	}
 	
+	@Transactional
 	@GetMapping("/registroAtendimento/{id}")
 	public String carregaRegistro(@PathVariable Long id, Model model) {
 		Optional<Estacionamento> estacionamentoSelecionado = ESTrepository.findById(id);
+		/*List<Veiculo> veiculosDoCliente = veiculoRepository.findByCliente(cliente);
+		model.addAttribute("listaveiculo", veiculosDoCliente);*/
+		model.addAttribute("listaveiculo",  veiculoRepository.findAll());
 		model.addAttribute("estacionamentoId", estacionamentoSelecionado.get().getId());
 		model.addAttribute("estacionamentoNome", estacionamentoSelecionado.get().getNome());
+		model.addAttribute("clienteId", this.cliente.getId());
+		System.out.println("listaVeiculo: " + model.getAttribute("listaVeiculoCliente"));
 		return "estacionamento/registroAtendimento";
 	}
+	
 	@PostMapping
 	public String cadastraCliente(CadastroCliente dados, Model model) {
 	    var cliente = new Cliente(dados);
@@ -157,12 +169,15 @@ public class EstacionamentoController {
 	
 	@PostMapping("/dono")
 	public String cadastraDono(CadastroDonoEstacionamento dados_2,Model model1) {
-	    var donoestacionamento = new DonoEstacionamento(dados_2);
+	
+		var donoestacionamento = new DonoEstacionamento(dados_2,estacionamento.getId());
 	    reposito.save(donoestacionamento);
 	    System.out.println(donoestacionamento);
-
+	    
+	    ESTrepository.save(estacionamento);
 	    return  "redirect:/estacionamento/CadastroEstacionamento";
 	}
+	
 	@DeleteMapping
 	public String removeCliente(Long id) {
 	        repository.deleteById(id);
@@ -178,10 +193,17 @@ public class EstacionamentoController {
 	
 	@PostMapping("/veiculo")
 	public String cadastraVeiculo(CadastraVeiculo veiculo, Model model){
-		model.addAttribute("listaVeiculos", veiculoRepository.findAll());
+		//Cliente clienteExistente = clienteRepository.findById(this.cliente.getId()).orElse(null);
+		Cliente clienteAtualizado = new Cliente();
 		var veiculo1 = new Veiculo(veiculo, cliente.getId());
-		//veiculo1.setCliente(this.cliente);
+		List<Veiculo> veiculosCliente = veiculoRepository.findByCliente(cliente);
+		
+		clienteAtualizado.setVeiculos(veiculosCliente);
+		
 	    veiculoRepository.save(veiculo1);	
+	    clienteService.atualizarCliente(this.cliente.getId(), clienteAtualizado);
+	    
+	    model.addAttribute("listaVeiculos", veiculoRepository.findAll());
 	    return "estacionamento/veiculo";
 	}
 }

@@ -1,6 +1,7 @@
 package com.example.estacionamento.domain.cliente;
 
 import java.util.List;
+import java.util.Objects;
 
 import com.example.estacionamento.controller.CadastroCliente;
 import com.example.estacionamento.controller.alteraCliente;
@@ -35,9 +36,9 @@ public class Cliente {
 	/*@OneToMany(mappedBy = "cliente", orphanRemoval = true)
 	@JoinColumn(name="veiculo_id", referencedColumnName="veiculo_id")
 	private List<Veiculo> veiculo;*/
-	//public String carro;
-	 @OneToMany(mappedBy = "cliente", orphanRemoval = true)
-	    private List<Veiculo> veiculos; 
+	
+	@OneToMany(mappedBy = "cliente")
+    private List<Veiculo> veiculos; 
 	 
     public Long getId() {
 		return id;
@@ -86,14 +87,14 @@ public class Cliente {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
-	
-	/*public Veiculo getVeiculo() {
-		return veiculo;
+
+	public List<Veiculo> getVeiculos() {
+		return veiculos;
 	}
 
-	public void setVeiculo(Veiculo veiculo) {
-		this.veiculo = veiculo;
-	}*/
+	public void setVeiculos(List<Veiculo> veiculos) {
+		this.veiculos = veiculos;
+	}
 
 	@Override
     public String toString() {
@@ -108,24 +109,50 @@ public class Cliente {
     	
     }
 	 public Cliente(CadastroCliente dados) {
-	        this.cpf=dados.cpf();
-	        this.dataNascimento=dados.dataNascimento();
-	        this.email=dados.email();
-	        this.nome=dados.nome();
-	        this.senha=dados.senha();	        
-	    }
+        this.cpf=dados.cpf();
+        this.dataNascimento=dados.dataNascimento();
+        this.email=dados.email();
+        this.nome=dados.nome();
+        this.senha=dados.senha();	        
+    }
+	 
+	 public Cliente(List<Veiculo> veiculoId) {
+        this.setVeiculos(veiculos);
+    }
 	
 	 public Cliente(Long id) {
 		 this.id = id;
 	 }
 
 
-		public void atualizaDados(alteraCliente dados) {
-			// TODO Auto-generated method stub
-			this.nome=dados.nome();
-			this.cpf=dados.cpf();
-			this.email=dados.email();
-			
-			
-		}
+	public void atualizaDados(alteraCliente dados) {
+		// TODO Auto-generated method stub
+		this.nome=dados.nome();
+		this.cpf=dados.cpf();
+		this.email=dados.email();
+		
+		
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(cpf, dataNascimento, email, id, nome, senha, veiculos);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Cliente other = (Cliente) obj;
+		return Objects.equals(cpf, other.cpf) && Objects.equals(dataNascimento, other.dataNascimento)
+				&& Objects.equals(email, other.email) && Objects.equals(id, other.id)
+				&& Objects.equals(nome, other.nome) && Objects.equals(senha, other.senha)
+				&& Objects.equals(veiculos, other.veiculos);
+	}
+	
+	
 }

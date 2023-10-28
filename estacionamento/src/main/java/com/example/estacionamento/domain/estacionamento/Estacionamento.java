@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -25,18 +26,14 @@ public class Estacionamento {
 	private String vagas;
 	private String valor_vaga;
 	
-	@ManyToOne
+	/*@ManyToOne
 	@JoinColumn(name="dono_estacionamento_id", referencedColumnName="id")
 	private DonoEstacionamento dono;
+	*/
 	
+	@OneToMany(mappedBy="dono")
 	
-	
-	public DonoEstacionamento getDono() {
-		return dono;
-	}
-	public void setDono(DonoEstacionamento dono) {
-		this.dono = dono;
-	}
+
 	public Long getId() {
 		return id;
 	}
@@ -91,6 +88,10 @@ public class Estacionamento {
 	
 	public  Estacionamento() {
 		
+	}
+	
+	public Estacionamento(Long id) {
+		this.id=id;
 	}
 	
 	public Estacionamento(CadastroEstacionamento dados_3) {
