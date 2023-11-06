@@ -2,17 +2,18 @@ package com.example.estacionamento.controller;
 
 
 
-import java.net.http.HttpRequest;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -27,7 +28,10 @@ import com.example.estacionamento.domain.donoestacionamento.DonoEstacionamento;
 import com.example.estacionamento.domain.donoestacionamento.DonoRepository;
 import com.example.estacionamento.domain.estacionamento.Estacionamento;
 import com.example.estacionamento.domain.estacionamento.EstacionamentoRepository;
+import com.example.estacionamento.domain.reserva.Reserva;
+import com.example.estacionamento.domain.reserva.ReservaRepository;
 import com.example.estacionamento.service.ClienteService;
+import com.example.estacionamento.service.VeiculoService;
 
 
 
@@ -44,16 +48,20 @@ public class EstacionamentoController {
 	private EstacionamentoRepository ESTrepository;
 	@Autowired
 	private VeiculoRepository  veiculoRepository;
-	
 	@Autowired
     private ClienteRepository clienteRepository; // Supondo que você tenha um repositório de usuários
+	@Autowired
+	private ReservaRepository reservaRepository;
 	
 	@Autowired
 	private ClienteService clienteService;
-	
+	@Autowired
+	private VeiculoService veiculoService;
 	private Cliente cliente = new Cliente();
 	private DonoEstacionamento dono = new DonoEstacionamento();
+	private Reserva rese=new Reserva();
 	private Estacionamento estacionamento= new Estacionamento();
+	
 
 	
 	@GetMapping("/vaga")
@@ -78,7 +86,7 @@ public class EstacionamentoController {
         	System.out.println("Usuário (dono de estacionamento) logado: " + donoEsta);
 
 	        model.addAttribute("donoEstacionamento", donoEsta); 
-	        this.dono.setId(dono.getId());
+	        this.dono.setId(donoEsta.getId());
 	        return "redirect:/estacionamento/CadastroEstacionamento";
             // Usuário inválido, mostre uma mensagem de erro
         }else {
@@ -129,7 +137,10 @@ public class EstacionamentoController {
 	@GetMapping("/Perfil/logado")
 	public String carregaPerfilLogado(Model model) {
 		Optional<Cliente> clienteSelecionado = clienteRepository.findById(this.cliente.getId());
-		System.out.println("ClienteSelecionado: " + clienteSelecionado);
+		List<Veiculo> veiculosCliente = veiculoService.findByCliente(this.cliente.getId());
+//		System.out.println("ClienteSelecionado: " + clienteSelecionado);
+		//System.out.println("Veiculos: " + veiculosCliente);
+		model.addAttribute("veiculoCliente", veiculosCliente);
 		model.addAttribute("nomeCliente", clienteSelecionado.get().getNome());
 		model.addAttribute("emailCliente", clienteSelecionado.get().getEmail());
 		return "estacionamento/Perfil";
@@ -137,14 +148,16 @@ public class EstacionamentoController {
 	
 	@Transactional
 	@GetMapping("/registroAtendimento/{id}")
-	public String carregaRegistro(@PathVariable Long id, Model model) {
+	public String carregaRegistro(@PathVariable Long id, Model model,ReservaSalvar rese) {
 		Optional<Estacionamento> estacionamentoSelecionado = ESTrepository.findById(id);
-		/*List<Veiculo> veiculosDoCliente = veiculoRepository.findByCliente(cliente);
-		model.addAttribute("listaveiculo", veiculosDoCliente);*/
-		model.addAttribute("listaveiculo",  veiculoRepository.findAll());
+		this.estacionamento.setId(estacionamentoSelecionado.get().getId());
+		///var reserva=new Reserva(rese,dono.getId();
+		model.addAttribute("estacionamentoVagas", estacionamentoSelecionado.get().getVagas());
+		List<Veiculo> veiculosCliente = veiculoService.findByCliente(this.cliente.getId());
 		model.addAttribute("estacionamentoId", estacionamentoSelecionado.get().getId());
 		model.addAttribute("estacionamentoNome", estacionamentoSelecionado.get().getNome());
-		model.addAttribute("clienteId", this.cliente.getId());
+		model.addAttribute("veiculoCliente", veiculosCliente);
+		model.addAttribute("reserva", new Reserva());
 		System.out.println("listaVeiculo: " + model.getAttribute("listaVeiculoCliente"));
 		return "estacionamento/registroAtendimento";
 	}
@@ -186,24 +199,34 @@ public class EstacionamentoController {
 	 
 	@PostMapping("/CadastroEstacionamento")
 	public String cadastraEstacionamento( CadastroEstacionamento dados_3, Model model_3){
-	    var estacionamento = new Estacionamento(dados_3);
+		DonoEstacionamento donoatualizado=new DonoEstacionamento();
+		
+	    var estacionamento = new Estacionamento(dados_3,dono.getId());
+	    
 	    ESTrepository.save(estacionamento);	
 	    return "redirect:/estacionamento";
 	}
 	
 	@PostMapping("/veiculo")
 	public String cadastraVeiculo(CadastraVeiculo veiculo, Model model){
-		//Cliente clienteExistente = clienteRepository.findById(this.cliente.getId()).orElse(null);
-		Cliente clienteAtualizado = new Cliente();
-		var veiculo1 = new Veiculo(veiculo, cliente.getId());
-		List<Veiculo> veiculosCliente = veiculoRepository.findByCliente(cliente);
-		
-		clienteAtualizado.setVeiculos(veiculosCliente);
-		
-	    veiculoRepository.save(veiculo1);	
-	    clienteService.atualizarCliente(this.cliente.getId(), clienteAtualizado);
-	    
-	    model.addAttribute("listaVeiculos", veiculoRepository.findAll());
-	    return "estacionamento/veiculo";
+		Set<Veiculo> listaVeiculo = new HashSet<>();
+		Cliente cliente = clienteRepository.findById(this.cliente.getId()).orElse(null);
+		Veiculo veiculo2 = new Veiculo(veiculo);
+
+		veiculo2.setCliente(cliente);
+		cliente.getVeiculos().add(veiculo2);
+
+		// Agora, ao salvar o cliente, o veículo também será salvo e associado a ele
+		clienteRepository.saveAndFlush(cliente);
+		return null;
 	}
+	
+	@Transactional
+	@PostMapping("/registro")
+	public String Registro(@ModelAttribute Reserva reserva) {
+		Reserva reservaSalvar = new Reserva(reserva, this.cliente.getId(), this.estacionamento.getId());
+		reservaRepository.save(reservaSalvar);
+		return "estacionamento/Perfil";
+	}
+
 }

@@ -32,23 +32,13 @@ public class DonoEstacionamento {
 
 	private String numero;
 	
-	@ManyToOne
+	/*@ManyToOne
 	@JoinColumn(name="estacionamento_id", referencedColumnName="id")
-	private Estacionamento estacionamento;
-	/*
+	private Estacionamento estacionamento;*/
+	
 	@OneToMany(mappedBy="dono", orphanRemoval=true)
-	*/
 	
 	
-	public Estacionamento getEstacionamento() {
-		return estacionamento;
-	}
-
-
-
-	public void setEstacionamento(Estacionamento estacionamento) {
-		this.estacionamento = estacionamento;
-	}
 
 
 
@@ -146,7 +136,7 @@ public DonoEstacionamento( CadastroDonoEstacionamento dados_2, Long estacionamen
     this.nome=dados_2.nome();
     this.numero=dados_2.numero();
     this.senha=dados_2.senha();   
-    this.setEstacionamento(new Estacionamento(estacionamentoID));
+    //this.setEstacionamento(new Estacionamento(estacionamentoID));
   }
 
 

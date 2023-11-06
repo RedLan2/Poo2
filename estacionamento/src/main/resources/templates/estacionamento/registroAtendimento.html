@@ -17,20 +17,20 @@
 	<h1></h1>
     <main class="container">
 		<div class="input-field">
-	<form action="/estacionamento/vaga" method="Get">
-	 <th:block th:if="${estacionamentoId != null}">
-		 <h1>REGISTRO DE ATENDIMENTO</h1>
-	        <!--<p>ID: <span th:text="${estacionamentoId}"></span></p>-->
+	<form th:action="@{/estacionamento/registro}" method="post">
+ 		<th:block th:if="${estacionamentoId != null}">
+		 	<h1>REGISTRO DE ATENDIMENTO</h1>
 	        <label for="nomeEstacionamento">Estacionamento:</label><br>
 	        <p><span th:text="${estacionamentoNome}"></span></p>
-			<label for="horario_funcionamento">Veiculo:</label><br>
-		<select>
-    <option th:each="veiculo : ${listaveiculo}" th:value="${veiculo.id}" th:text="${veiculo.modelo}"></option>
-   
-</select>
+			<label for="horario_funcionamento">Veiculo:</label><br> 
+			 <select id="veiculo" name="veiculo" th:field="*{reserva.fk_veiculo}">
+			    <option th:each="veiculo : ${veiculoCliente}"  th:value="${veiculo.id}" th:text="${veiculo.modelo}"></option>
+			</select>
+			<!--<p>Vagas Disponiveis</p> 
+			<p> <span th:text="${estacionamentoVagas}"> </span> </p> -->
 			
-			 <br><input type="submit" class="button" value="Registrar" onclick="exibirPopup()">
-	    </th:block>
+			 <br><input type="submit" class="button" value="Registrar">
+    	</th:block>
 
 	    <!-- <th:block th:if="${estacionamentoSelecionado == null}">
 	        <p>Estacionamento não encontrado.</p>

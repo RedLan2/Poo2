@@ -16,9 +16,16 @@
     <input type="submit" value="Escolher estacionamento">
   </form>
   
+  <p>Suas reservas: </p>
+  
   <form action="/estacionamento/veiculo" method="get">
     <p>Caso não tenha um veículo cadastrado, cadastre um veículo.</p>
     <input type="submit" value="Cadastrar Veículo">
   </form>
+ 
+ <ul>
+    <li>Esss sao seus veiculos:</li>
+	<li th:each="veiculo : ${veiculoCliente}"  th:text="${veiculo.modelo}"></li>
+</ul>
 </body>
 </html>

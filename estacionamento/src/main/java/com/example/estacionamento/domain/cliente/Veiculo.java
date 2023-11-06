@@ -4,8 +4,10 @@ import java.util.Objects;
 
 import com.example.estacionamento.controller.CadastraVeiculo;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -25,8 +27,7 @@ public class Veiculo {
     private String cor;
     private String placa;
    
-
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="cliente_id", referencedColumnName="id")
 	private Cliente cliente;
     
@@ -85,21 +86,5 @@ public class Veiculo {
 		this.cor=dados_Veiculo.cor();
 		this.placa=dados_Veiculo.placa();
 		this.setCliente(new Cliente(clienteId));
-	}
-	@Override
-	public int hashCode() {
-		return Objects.hash(cliente, cor, id, modelo, placa);
-	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Veiculo other = (Veiculo) obj;
-		return Objects.equals(cliente, other.cliente) && Objects.equals(cor, other.cor) && Objects.equals(id, other.id)
-				&& Objects.equals(modelo, other.modelo) && Objects.equals(placa, other.placa);
 	}
 }

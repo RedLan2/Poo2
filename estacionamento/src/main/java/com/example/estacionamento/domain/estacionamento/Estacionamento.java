@@ -26,16 +26,22 @@ public class Estacionamento {
 	private String vagas;
 	private String valor_vaga;
 	
-	/*@ManyToOne
+	@ManyToOne
 	@JoinColumn(name="dono_estacionamento_id", referencedColumnName="id")
 	private DonoEstacionamento dono;
-	*/
 	
+	/*
 	@OneToMany(mappedBy="dono")
-	
+	*/
 
 	public Long getId() {
 		return id;
+	}
+	public DonoEstacionamento getDono() {
+		return dono;
+	}
+	public void setDono(DonoEstacionamento dono) {
+		this.dono = dono;
 	}
 	public void setId(Long id) {
 		this.id = id;
@@ -94,6 +100,18 @@ public class Estacionamento {
 		this.id=id;
 	}
 	
+	public Estacionamento(CadastroEstacionamento dados_3, Long donoId) {
+		this.nome=dados_3.nome();
+		this.endereco=dados_3.endereco();
+		this.horario_funcionamento=dados_3.horario_funcionamento();
+		this.vagas=dados_3.vagas();
+		this.valor_vaga=dados_3.valor_vaga();
+		this.cnpj=dados_3.cnpj();
+		this.setDono(new DonoEstacionamento(donoId));
+	
+	
+	}
+
 	public Estacionamento(CadastroEstacionamento dados_3) {
 		this.nome=dados_3.nome();
 		this.endereco=dados_3.endereco();
@@ -102,11 +120,7 @@ public class Estacionamento {
 		this.valor_vaga=dados_3.valor_vaga();
 		this.cnpj=dados_3.cnpj();
 	
-	
 	}
 
-	
-	
-	
+}	
 
-}
